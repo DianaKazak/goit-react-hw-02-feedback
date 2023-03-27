@@ -1,25 +1,30 @@
-import { BtnContainer } from './FeedbackOptions.styled';
-export function FeedbackOptions({ positive, negative, neutral }) {
-  //   console.log(props.good);
+import PropTypes from 'prop-types';
+import {
+  FeedbackOptionsStyled,
+  FeedbackOptionsBtnStyled,
+} from './FeedbackOptionsStyled';
+
+export const FeedbackOptions = ({ options, onLeaveFeedback }) => {
   return (
-    <>
-      <BtnContainer>
-        <button onClick={positive}>Good</button>
-        <button onClick={neutral}>Neutral</button>
-        <button onClick={negative}>Bad</button>
-      </BtnContainer>
-    </>
+    <FeedbackOptionsStyled>
+      {options.map(option => {
+        return (
+          <li key={option}>
+            <FeedbackOptionsBtnStyled
+              onClick={() => {
+                onLeaveFeedback(option);
+              }}
+            >
+              {option}
+            </FeedbackOptionsBtnStyled>
+          </li>
+        );
+      })}
+    </FeedbackOptionsStyled>
   );
-}
+};
 
-// function neutralFeed() {
-//   this.setState(prevState => ({
-//     neutral: prevState.neutral + 1,
-//   }));
-// }
-
-// function negativeFeed() {
-//   this.setState(prevState => ({
-//     bad: prevState.bad + 1,
-//   }));
-// }
+FeedbackOptions.propTypes = {
+  options: PropTypes.arrayOf(PropTypes.string.isRequired),
+  onLeaveFeedback: PropTypes.func.isRequired,
+};
